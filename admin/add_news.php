@@ -1,23 +1,12 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "news_db";
-
-$conn = mysqli_connect($host, $user, $pass, $db);
-
-if (!$conn) {
-    die("Kết nối thất bại: " . mysqli_connect_error());
-}
-
-mysqli_set_charset($conn, "utf8mb4");
+require '../config.php';
 
 $message = "";
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
-
+    
     if($title == '' && $content == '') {
         $message = "Vui lòng nhập tiêu đề và nội dung";
     } else {
@@ -46,14 +35,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Thêm bài viết mới</h1>
 
-    <?php if($message !== ""): ?> 
-        <p style="color: green;"><?php echo $message; ?></p>
-    <?php endif; ?>    
+    <p>
+        <a href="list_news.php">Xem danh sách bài viết</a>
+    </p>
 
+    <?php if($message !== ""): ?> 
+        <p><?php echo $message; ?></p>
+    <?php endif; ?>    
+    
     <form action="" method="post">
         <p>
             <label>Tiêu đề: </label>
-            <input type="text" name="title" style="width: 400px;" required>
+            <input type="text" name="title" style="width: 450px;" required>
         </p>
         <p>
             <label>Nội dung: </label>
@@ -64,12 +57,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </form>
 
-    <!-- <?php
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo "<h2>Dữ liệu nhận được: </h2>";
-            echo "<p>Tiêu đề: " . htmlspecialchars($_POST['title']) . "</p>";
-            echo "<p>Nội dung: " . nl2br(htmlspecialchars($_POST['content'])) . "</p>";
-        }
-    ?> -->
 </body>
 </html>
