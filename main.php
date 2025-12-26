@@ -7,18 +7,20 @@
 </head>
 <body>
     <header>
-       <h1>Main Page</h1>
+       <h1>Trang chủ</h1>
     </header>
 
     <main>
         <div class="links">
             <div>
-                <a href="admin/list_users.php">Danh sách người dùng</a>
-                <a href="admin/add_users.php">Thêm người dùng mới</a>
+                <h2>Người dùng</h2>
+                <a href="admin/list_users.php" target="_blank">Danh sách người dùng</a>
+                <a href="admin/add_users.php" target="_blank">Thêm người dùng mới</a>
             </div>
             <div>
-                <a href="admin/list_news.php">Danh sách bài viết</a>
-                <a href="admin/add_news.php">Thêm bài viết mới</a> 
+                <h2>Bài viết</h2>
+                <a href="admin/list_news.php" target="_blank">Danh sách bài viết</a>
+                <a href="admin/add_news.php" target="_blank">Thêm bài viết mới</a> 
             </div>
         </div>
         
@@ -46,14 +48,11 @@
         text-decoration: none;
         color: #0066cc;
     }
-    a:hover {
-        text-decoration: underline;
-    }
 
     header {
         margin-bottom: 30px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         background-color: #f4f4f4;
         padding: 10px 20px;
@@ -63,5 +62,30 @@
         display: flex;
         justify-content: space-around;
         margin-top: 50px;
+    }
+
+    .links div {
+        padding: 50px;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        background-color: #ffffff;
+    }
+
+    .links div h2 {
+        margin-bottom: 20px;
+        color: #555;
+    }
+
+    .links div a {
+        padding: 20px 30px;
+        background-color: #f8f8f8ff;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .links div a:hover {
+        background-color: #e0e0e0ff;
+        transition: background-color 0.5s;
     }
 </style>

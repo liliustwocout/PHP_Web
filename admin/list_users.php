@@ -7,6 +7,18 @@ $result = mysqli_query($conn, $sql);
 if(!$result) {
     die("Lỗi truy vấn: " . mysqli_error($conn));
 }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $usernameSearch = $_POST['usernameSearch'] ?? '';
+        if($usernameSearch != '') {
+            $sql = "SELECT * FROM users WHERE username LIKE '%$usernameSearch%' ORDER BY created_at DESC, id DESC";
+            $result = mysqli_query($conn, $sql);
+
+            if(!$result) {
+                die("Lỗi truy vấn: " . mysqli_error($conn));
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +33,13 @@ if(!$result) {
     <p>
         <a href="../main.php">Quay lại trang chủ</a>
     </p>
+
+    <form action="" method="post">
+        <p>
+            <input type="text" placeholder="Tìm kiếm người dùng theo tên..." name="usernameSearch" style="width: 200px"></input>
+            <button type="submit">Tìm kiếm</button>
+        </p>
+    </form>
 
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
@@ -56,3 +75,53 @@ if(!$result) {
 
 </body>
 </html>
+
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0066cc;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
