@@ -1,5 +1,6 @@
 <?php
-require '../config.php';
+require '..\vendor\autoload.php';
+use App\Models\Users;
 
 $id = $_GET['id'] ?? '';
 
@@ -7,8 +8,8 @@ if($id == '') {
     die("Thiếu tham số id");
 }
 
-$sql = "SELECT * FROM users WHERE id = $id";
-$result = mysqli_query($conn, $sql);
+$usersModel = new Users();
+$result = $usersModel->getById($id);
 
 if(!$result) {
     die("Lỗi truy vấn: " . mysqli_error($conn));
@@ -20,6 +21,7 @@ if(mysqli_num_rows($result) == 0) {
 $user = mysqli_fetch_assoc($result);
 $message = "";
 
+// Xử lý khi người dùng submit form
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $email = $_POST['email'] ?? '';
@@ -27,14 +29,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($username == '' || $email == '' || $gender == '') {
         $message = "Vui lòng điền đầy đủ thông tin";
     } else {
-        $now = date('Y-m-d H:i:s');
-
-        $sqlUpdate = "UPDATE users SET username = '$username',
-                email = '$email',
-                gender = '$gender',
-                updated_at = '$now'
-                WHERE id = $id";
-        $ok = mysqli_query($conn, $sqlUpdate);
+        $ok = $usersModel->update($id, $username, $email, $gender);
         if(!$ok) {
             die("Lỗi truy vấn: " . mysqli_error($conn));
         } else {

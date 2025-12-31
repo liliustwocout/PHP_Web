@@ -1,0 +1,19 @@
+{
+    "name": "lilius/news-site",
+    "autoload": {
+        "psr-4": {
+            "Lilius\\NewsSite\\": "src/",
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Đạt",
+            "email": "datpltn205@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^3.11",
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

@@ -33,6 +33,9 @@ if(!$result) {
     <p>
         <a href="../main.php">Quay lại trang chủ</a>
     </p>
+    <p>
+        <a href="add_users.php">+ Thêm người dùng mới</a>
+    </p>
 
     <form action="" method="post">
         <p>
@@ -70,9 +73,6 @@ if(!$result) {
         </tr>
         <?php endwhile; ?>
     </table>
-
-    <a href="add_users.php">+ Thêm người dùng mới</a>
-
 </body>
 </html>
 

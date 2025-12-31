@@ -14,13 +14,13 @@
         <div class="links">
             <div>
                 <h2>Người dùng</h2>
-                <a href="admin/list_users.php" target="_blank">Danh sách người dùng</a>
-                <a href="admin/add_users.php" target="_blank">Thêm người dùng mới</a>
+                <a href="admin/list_users.php" >Danh sách người dùng</a>
+                <a href="admin/add_users.php" >Thêm người dùng mới</a>
             </div>
             <div>
                 <h2>Bài viết</h2>
-                <a href="admin/list_news.php" target="_blank">Danh sách bài viết</a>
-                <a href="admin/add_news.php" target="_blank">Thêm bài viết mới</a> 
+                <a href="admin/list_news.php" >Danh sách bài viết</a>
+                <a href="admin/add_news.php" >Thêm bài viết mới</a> 
             </div>
         </div>
         

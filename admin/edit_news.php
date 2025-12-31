@@ -1,5 +1,7 @@
 <?php
-require '../config.php';
+
+require '../vendor/autoload.php';
+use App\Models\News;
 
 $id = $_GET['id'] ?? '';
 
@@ -7,8 +9,8 @@ if($id == '') {
     die("Thiếu tham số id");
 }
 
-$sql = "SELECT * FROM news WHERE id = $id";
-$result = mysqli_query($conn, $sql);
+$newsModel = new News();
+$result = $newsModel->getById($id);
 
 if(!$result) {
     die("Lỗi truy vấn: " . mysqli_error($conn));
@@ -20,6 +22,7 @@ if(mysqli_num_rows($result) == 0) {
 
 $news = mysqli_fetch_assoc($result);
 $message = "";
+// Xử lý khi người dùng submit form
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
@@ -28,14 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($title == '' || $content == '') {
         $message = "Vui lòng điền đầy đủ tiêu đề và nội dung";
     } else {
-        $now = date('Y-m-d H:i:s');
-
-        $sqlUpdate = "UPDATE news SET title = '$title',
-                content = '$content',
-                updated_at = '$now'
-                WHERE id = $id";
-
-        $ok = mysqli_query($conn, $sqlUpdate);
+        $ok = $newsModel->update($id, $title, $content);
         if(!$ok) {
             die("Lỗi truy vấn: " . mysqli_error($conn));
         } else {

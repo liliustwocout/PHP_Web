@@ -1,5 +1,6 @@
 <?php
-    require '../config.php';
+    require '../vendor/autoload.php';
+    use App\Models\Users;
 
     $id = $_GET['id'] ?? '';
     $username = $_GET['username'] ?? '';
@@ -8,8 +9,8 @@
         die("Thiếu tham số id hoặc username");
     }
 
-    $sql = "SELECT * FROM users WHERE id = '$id' OR username = '$username'";
-    $result = mysqli_query($conn, $sql);
+    $usersModel = new Users();
+    $result = $usersModel->getById($id);
 
     if(!$result) {
         die("Lỗi truy vấn: " . mysqli_error($conn));

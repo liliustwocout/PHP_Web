@@ -1,5 +1,6 @@
 <?php
-require '../config.php';
+require '../vendor/autoload.php';
+use App\Models\News;
 
 $id = $_GET['id'] ?? '';
 
@@ -7,16 +8,9 @@ if($id == '') {
     die("Thiếu tham số id");
 }
 
-$sql = "SELECT * FROM news WHERE id = $id";
-$result = mysqli_query($conn, $sql);
-
-if(!$result) {
-    die("Lỗi truy vấn: " . mysqli_error($conn));
-}
-
-if(mysqli_num_rows($result) == 0) {
-    die("Không tìm thấy bài viết với id = $id");
-}
+$id = $_GET['id'];
+$newsModel = new News();
+$result = $newsModel->getById($id);
 
 $news = mysqli_fetch_assoc($result);
 ?>

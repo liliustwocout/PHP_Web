@@ -1,5 +1,7 @@
 <?php
-require '../config.php';
+require '../vendor/autoload.php';
+use App\Models\Users;
+use Carbon\Carbon;
 
 $message = "";
 
@@ -13,11 +15,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "Vui lòng điền đầy đủ thông tin";
     } else {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $now = date('Y-m-d H:i:s');
-        $sql = "INSERT INTO users (username, email, password, gender, created_at, updated_at) 
-                VALUES ('$username', '$email', '$hashed_password', '$gender', '$now', '$now')";
-        
-        $result = mysqli_query($conn, $sql);
+        $usersModel = new Users();
+        $result = $usersModel->insert($username, $email, $hashed_password, $gender, $now, $now);
 
         if(!$result) {
             $message = "Lỗi khi thêm người dùng: " . mysqli_error($conn);

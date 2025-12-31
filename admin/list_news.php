@@ -1,24 +1,11 @@
 <?php
-    require '../config.php';
+require '../vendor/autoload.php';
+use Carbon\Carbon;
 
-    $sql = "SELECT * FROM news ORDER BY created_at DESC, id DESC";
-    $result = mysqli_query($conn, $sql);
+use App\Models\News;
 
-    if(!$result) {
-        die("Lỗi truy vấn: " . mysqli_error($conn));
-    }
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $titleSearch = $_POST['titleSearch'] ?? '';
-        if($titleSearch != '') {
-            $sql = "SELECT * FROM news WHERE title LIKE '%$titleSearch%' ORDER BY created_at DESC, id DESC";
-            $result = mysqli_query($conn, $sql);
-
-            if(!$result) {
-                die("Lỗi truy vấn: " . mysqli_error($conn));
-            }
-        }
-    }
+$newsModel = new News();
+$result = $newsModel->getAll();
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +21,10 @@
     <p>
         <a href="../main.php">Quay lại trang chủ</a>
     </p>
+    <p>
+        <a href="add_news.php">+ Thêm bài viết mới</a>
+    </p>
+
     <form action="" method="post">
         <p>
             <input type="text" placeholder="Tìm kiếm bài viết theo tiêu đề..." name="titleSearch" style="width: 200px"></input>
@@ -56,7 +47,10 @@
                 <tr>
                     <td><?php echo $row['id'] ?></td>
                     <td><?php echo htmlspecialchars($row['title']) ?></td>
-                    <td><?php echo $row['created_at'] ?></td>
+                    <td><?php 
+                        $date = Carbon::parse($row['created_at']);
+                        echo $date->format('d/m/Y H:i');
+                     ?></td>
                     <td><?php echo $row['updated_at'] ?></td>
                     <td>
                         <a href="view_news.php?id=<?php echo $row['id']; ?>">
@@ -80,9 +74,7 @@
         <?php endif; ?>
     </table>
 
-    <p>
-        <a href="add_news.php">+ Thêm bài viết mới</a>
-    </p>
+
 </body>
 </html> 
 

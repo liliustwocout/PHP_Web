@@ -1,28 +1,29 @@
 <?php
-require '../config.php';
+
+require '../vendor/autoload.php'; 
+use Carbon\Carbon;
+use App\Models\News;
 
 $message = "";
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
-    
-    if($title == '' && $content == '') {
-        $message = "Vui lòng nhập tiêu đề và nội dung";
-    } else {
-        $now = date('Y-m-d H:i:s');
-        $sql = "INSERT INTO news (title, content, created_at, updated_at)
-                VALUES ('$title', '$content', '$now', '$now')";
-        
-        $result = mysqli_query($conn, $sql);
 
-        if($result) {
-            $message = "Thêm bài viết thành công!";
+    if ($title === '' || $content === '') {
+        $message = ("Vui lòng nhập đầy đủ tiêu đề và nội dung.");
+    } else {
+        $newsModel = new News();
+        if($newsModel->insert($title, $content)) {
+            $message = "Thêm bài viết thành công.";
         } else {
             $message = "Lỗi khi thêm bài viết: " . mysqli_error($conn);
         }
     }
+        header('Location: list_news.php');
 }
+
+
 ?>
 
 <!DOCTYPE html>
